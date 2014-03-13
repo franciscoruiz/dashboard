@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <!--
+            http://www.html5rocks.com/en/tutorials/webcomponents/template/
+        -->
+        <template id="template">
+            <div id="component">
+                <h1>Hello World!</h1>
+                <span></span>
+            </div>
+        </template>
+    </head>
     <body>
         <h1>Dashboard</h1>
+        
         <script src="https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.jgz"></script>
         <script src="dashboard.js"></script>
-        <div>
-            <span id="output"></span>
-        </div>
     </body>
 </html>
