@@ -13,15 +13,18 @@
                 realm: 'realm1'
             });
             connection.onopen = function (session) {
-                $rootScope.$apply(function () {
-                    deferredSession.resolve(session);
-                });
+                deferredSession.resolve(session);
             };
             connection.open();
         };
         AutobahnConnection.prototype.subscribe = function (eventName, subscriber) {
             this.session.then(function (session) {
-                session.subscribe(eventName, subscriber);
+                session.subscribe(eventName, function () {
+                    var subscriber_arguments = arguments;
+                    $rootScope.$apply(function () {
+                        subscriber.apply(subscriber, subscriber_arguments);
+                    });
+                });
             });
         };
         
@@ -32,8 +35,8 @@
         $scope.counter = -1;
         
         console.log('Subscribing to updates');
+        
         autobahn.subscribe('com.dashboard', function (data) {
-            console.log("Got event:", data);
             $scope.counter = data[0].counter;
         });
     });
