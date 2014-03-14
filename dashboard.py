@@ -1,12 +1,7 @@
-import random
-
-from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks
 
-from autobahn.wamp.types import SubscribeOptions
 from autobahn.twisted.util import sleep
 from autobahn.twisted.wamp import ApplicationSession
-
 
 
 class Server(ApplicationSession):
@@ -15,33 +10,24 @@ class Server(ApplicationSession):
     and with complex payloads every second.
     """
 
-    def __init__(self, realm = "realm1"):
+    def __init__(self, realm='realm1'):
         ApplicationSession.__init__(self)
         self._realm = realm
-
 
     def onConnect(self):
         self.join(self._realm)
 
-
     @inlineCallbacks
     def onJoin(self, details):
         def publish_component_data(data):
-            print 'Hub.publishing'
-            
             self.publish('com.dashboard', data)
-        
-        print 'Hub.subscribing'
-            
-        yield self.subscribe(
-            publish_component_data,
-            'com.dashboard.component',
-            )
+
+        yield self.subscribe(publish_component_data, 'com.dashboard.component')
 
 
 class Component(ApplicationSession):
-    
-    def __init__(self, realm = "realm1"):
+
+    def __init__(self, realm='realm1'):
         ApplicationSession.__init__(self)
         self._realm = realm
 
@@ -52,8 +38,6 @@ class Component(ApplicationSession):
     def onJoin(self, details):
         counter = 0
         while True:
-            print 'Component.publishing'
-            
             obj = {'counter': counter, 'foo': [1, 2, 3]}
             self.publish('com.dashboard.component', obj)
 
