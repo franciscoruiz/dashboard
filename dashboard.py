@@ -29,13 +29,13 @@ class Server(ApplicationSession):
         def publish_component_data(data):
             print 'Hub.publishing'
             
-            self.publish('com.myapp.topic2', data)
+            self.publish('com.dashboard', data)
         
         print 'Hub.subscribing'
             
         yield self.subscribe(
             publish_component_data,
-            'com.myapp.component',
+            'com.dashboard.component',
             )
 
 
@@ -55,7 +55,7 @@ class Component(ApplicationSession):
             print 'Component.publishing'
             
             obj = {'counter': counter, 'foo': [1, 2, 3]}
-            self.publish('com.myapp.component', obj)
+            self.publish('com.dashboard.component', obj)
 
             counter += 1
             yield sleep(3)

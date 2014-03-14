@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!--
-            http://www.html5rocks.com/en/tutorials/webcomponents/template/
-        -->
-        <template id="template">
-            <div id="component">
-                <h1>Hello World!</h1>
-                <span></span>
-            </div>
-        </template>
-    </head>
-    <body>
+    <body ng-app="dashboard">
         <h1>Dashboard</h1>
         
+        <div ng-controller="ComponentCtrl">
+            <h1>Counter</h1>
+            <span>{{ counter }}</span>
+        </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>
         <script src="https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.jgz"></script>
         <script src="dashboard.js"></script>
     </body>
