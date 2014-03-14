@@ -5,10 +5,6 @@ from autobahn.twisted.wamp import ApplicationSession
 
 
 class Server(ApplicationSession):
-    """
-    An application component that publishes events with no payload
-    and with complex payloads every second.
-    """
 
     def __init__(self, realm='realm1'):
         ApplicationSession.__init__(self)
