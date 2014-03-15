@@ -14,10 +14,9 @@
             };
             connection.open();
         };
-        AutobahnConnection.prototype.subscribe = function (eventName, subscriber) {
+        AutobahnConnection.prototype.subscribe = function (topic, subscriber) {
             this.session.then(function (session) {
-                session.subscribe(eventName, function () {
-                    var subscriber_arguments = arguments;
+                session.subscribe(topic, function (subscriber_arguments) {
                     $rootScope.$apply(function () {
                         subscriber.apply(subscriber, subscriber_arguments);
                     });
@@ -27,21 +26,21 @@
         
         return AutobahnConnection;
     });
+    
 
     var dashboard = angular.module('dashboard', ['autobahn']);
+    
     dashboard.factory('dashboardEvents', function (AutobahnConnection) {
         return new AutobahnConnection({
             url: 'ws://127.0.0.1:8080/ws',
             realm: 'realm1'
         });
     });
+    
     dashboard.controller('ComponentCtrl', function ($scope, dashboardEvents) {
         $scope.counter = -1;
-        
-        console.log('Subscribing to updates');
-        
         dashboardEvents.subscribe('com.dashboard', function (data) {
-            $scope.counter = data[0].counter;
+            $scope.counter = data.counter;
         });
     });
 }());
