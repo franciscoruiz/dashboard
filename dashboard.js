@@ -3,7 +3,7 @@
 
 (function () {
     'use strict';
-    angular.module('autobahn', []).factory('autobahn', function ($q, $rootScope) {
+    angular.module('autobahn', []).service('AutobahnConnection', function ($q, $rootScope) {
         var AutobahnConnection = function () {
             var deferredSession = $q.defer();
             this.session = deferredSession.promise;
@@ -28,14 +28,16 @@
             });
         };
         
-        return new AutobahnConnection();
+        return AutobahnConnection;
     });
 
-    angular.module('dashboard', ['autobahn']).controller('ComponentCtrl', function ($scope, autobahn) {
+    var dashboard = angular.module('dashboard', ['autobahn']);
+    dashboard.controller('ComponentCtrl', function ($scope, AutobahnConnection) {
         $scope.counter = -1;
         
         console.log('Subscribing to updates');
         
+        var autobahn = new AutobahnConnection();
         autobahn.subscribe('com.dashboard', function (data) {
             $scope.counter = data[0].counter;
         });
