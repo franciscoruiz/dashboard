@@ -4,9 +4,19 @@
         <h1>Dashboard</h1>
         
         <div ng-controller="ComponentCtrl">
-            <h1>Counter</h1>
+            <h1>Counter (via Controller)</h1>
             <span>{{ counter }}</span>
         </div>
+        
+        <dashboard-component topic="com.dashboard.objects">
+            <h1>Objects (via Directive)</h1>
+            <span>{{ data }}</span>
+        </dashboard-component>
+        
+        <dashboard-component topic="com.dashboard.numbers">
+            <h1>Numbers (via Directive)</h1>
+            <span>{{ data }}</span>
+        </dashboard-component>
         
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>
         <script src="https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.jgz"></script>

@@ -40,8 +40,24 @@
     
     dashboard.controller('ComponentCtrl', function ($scope, dashboardEvents) {
         $scope.counter = -1;
-        dashboardEvents.subscribe('com.dashboard.component', function (data) {
+        dashboardEvents.subscribe('com.dashboard.objects', function (data) {
             $scope.counter = data.counter;
         });
+    });
+    
+    dashboard.directive('dashboardComponent', function (dashboardEvents) {
+        var link_directive = function (scope, element, attrs) {
+            console.debug('Subscribing to topic', attrs.topic);
+            dashboardEvents.subscribe(attrs.topic, function (data) {
+                scope.data = data;
+            });
+        };
+        
+        return {
+            restrict: 'EA',
+            scope: true,
+            replace: true,
+            link: link_directive
+        };
     });
 }());
