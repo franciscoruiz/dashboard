@@ -4,14 +4,11 @@
 (function () {
     'use strict';
     angular.module('autobahn', []).service('AutobahnConnection', function ($q, $rootScope) {
-        var AutobahnConnection = function () {
+        var AutobahnConnection = function (options) {
             var deferredSession = $q.defer();
             this.session = deferredSession.promise;
             
-            var connection = new autobahn.Connection({
-                url: 'ws://127.0.0.1:8080/ws',
-                realm: 'realm1'
-            });
+            var connection = new autobahn.Connection(options);
             connection.onopen = function (session) {
                 deferredSession.resolve(session);
             };
@@ -32,13 +29,18 @@
     });
 
     var dashboard = angular.module('dashboard', ['autobahn']);
-    dashboard.controller('ComponentCtrl', function ($scope, AutobahnConnection) {
+    dashboard.factory('dashboardEvents', function (AutobahnConnection) {
+        return new AutobahnConnection({
+            url: 'ws://127.0.0.1:8080/ws',
+            realm: 'realm1'
+        });
+    });
+    dashboard.controller('ComponentCtrl', function ($scope, dashboardEvents) {
         $scope.counter = -1;
         
         console.log('Subscribing to updates');
         
-        var autobahn = new AutobahnConnection();
-        autobahn.subscribe('com.dashboard', function (data) {
+        dashboardEvents.subscribe('com.dashboard', function (data) {
             $scope.counter = data[0].counter;
         });
     });
