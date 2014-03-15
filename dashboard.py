@@ -4,23 +4,6 @@ from autobahn.twisted.util import sleep
 from autobahn.twisted.wamp import ApplicationSession
 
 
-class Server(ApplicationSession):
-
-    def __init__(self, realm='realm1'):
-        ApplicationSession.__init__(self)
-        self._realm = realm
-
-    def onConnect(self):
-        self.join(self._realm)
-
-    @inlineCallbacks
-    def onJoin(self, details):
-        def publish_component_data(data):
-            self.publish('com.dashboard', data)
-
-        yield self.subscribe(publish_component_data, 'com.dashboard.component')
-
-
 class Component(ApplicationSession):
 
     def __init__(self, realm='realm1'):

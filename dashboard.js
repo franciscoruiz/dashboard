@@ -3,6 +3,7 @@
 
 (function () {
     'use strict';
+
     angular.module('autobahn', []).service('AutobahnConnection', function ($q, $rootScope) {
         var AutobahnConnection = function (options) {
             var deferredSession = $q.defer();
@@ -39,7 +40,7 @@
     
     dashboard.controller('ComponentCtrl', function ($scope, dashboardEvents) {
         $scope.counter = -1;
-        dashboardEvents.subscribe('com.dashboard', function (data) {
+        dashboardEvents.subscribe('com.dashboard.component', function (data) {
             $scope.counter = data.counter;
         });
     });
