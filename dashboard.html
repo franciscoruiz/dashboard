@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html>
-    <body ng-app="dashboard">
+<html ng-app="dashboard">
+    <head>
+        <link rel="stylesheet" href="dashboard.css">
+    </head>
+    <body>
         <h1>Dashboard</h1>
         
-        <div ng-controller="ComponentCtrl">
-            <h1>Counter (via Controller)</h1>
+        <div ng-controller="ComponentCtrl" class="dashboard-component">
+            <h2>Counter (via Controller)</h2>
             <span>{{ counter }}</span>
         </div>
         
         <dashboard-component topic="com.dashboard.objects">
-            <h1>Objects (via Directive)</h1>
+            <h2>Objects (via Directive)</h2>
             <span>{{ data }}</span>
         </dashboard-component>
         
         <dashboard-component topic="com.dashboard.numbers">
-            <h1>Numbers (via Directive)</h1>
+            <h2>Numbers (via Directive)</h2>
             <span>{{ data }}</span>
         </dashboard-component>
         
