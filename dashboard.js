@@ -46,17 +46,25 @@
     });
     
     dashboard.directive('dashboardComponent', function (dashboardEvents) {
+        return {
+            restrict: 'EA',
+            replace: true,
+            scope: {title: '@'},
+            transclude: true,
+            templateUrl: '/component.html'
+        };
+    });
+    
+    dashboard.directive('topicSubscription', function (dashboardEvents) {
         var link_directive = function (scope, element, attrs) {
-            console.debug('Subscribing to topic', attrs.topic);
-            dashboardEvents.subscribe(attrs.topic, function (data) {
+            console.debug('Subscribing to topic', attrs.topicSubscription);
+            
+            dashboardEvents.subscribe(attrs.topicSubscription, function (data) {
                 scope.data = data;
             });
         };
         
         return {
-            restrict: 'EA',
-            scope: true,
-            replace: true,
             link: link_directive
         };
     });

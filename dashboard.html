@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html ng-app="dashboard">
     <head>
-        <link rel="stylesheet" href="dashboard.css">
+        <script type="text/ng-template" id="/component.html">
+            <div class="dashboard-component dashboard-component-3-column">
+                <h2>{{ title }}</h2>
+                <div ng-transclude></div>
+            </div>
+        </script>
     </head>
     <body>
         <h1>Dashboard</h1>
         
-        <div ng-controller="ComponentCtrl" class="dashboard-component">
+        <div
+            ng-controller="ComponentCtrl"
+            class="dashboard-component dashboard-component-3-column"
+        >
             <h2>Counter (via Controller)</h2>
             <span>{{ counter }}</span>
         </div>
         
-        <dashboard-component topic="com.dashboard.objects">
-            <h2>Objects (via Directive)</h2>
+        <dashboard-component
+            title="Numbers"
+            topic-subscription="com.dashboard.numbers"
+            >
             <span>{{ data }}</span>
-        </dashboard-component>
-        
-        <dashboard-component topic="com.dashboard.numbers">
-            <h2>Numbers (via Directive)</h2>
-            <span>{{ data }}</span>
-        </dashboard-component>
-        
+        </div>
+
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>
         <script src="https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.jgz"></script>
         <script src="dashboard.js"></script>
